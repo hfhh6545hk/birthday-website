@@ -2,14 +2,19 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Better font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 <title>For You ❤️</title>
 
 <style>
 body {
     margin: 0;
-    font-family: Arial;
-    background: #fff0f5;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #fff0f5, #ffe4ec);
     text-align: center;
+    overflow: hidden;
 }
 
 /* PASSWORD */
@@ -17,7 +22,7 @@ body {
     position: fixed;
     width: 100%;
     height: 100%;
-    background: #ffd6e8;
+    background: linear-gradient(135deg, #ffd6e8, #ffeaf4);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -25,36 +30,60 @@ body {
 }
 
 input {
-    padding: 10px;
+    padding: 12px;
     margin: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
 }
 
 button {
-    padding: 10px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #ff4d88;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 /* MAIN */
 #main {
     display: none;
-    padding: 20px;
+    padding: 30px 15px;
+    animation: fadeIn 1s ease;
 }
 
 /* IMAGE */
 img {
-    width: 80%;
-    max-width: 300px;
-    border-radius: 10px;
+    width: 90%;
+    max-width: 320px;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    transition: opacity 0.5s ease;
 }
 
 /* TEXT */
 #text {
-    margin-top: 15px;
-    font-size: 16px;
+    margin-top: 20px;
+    font-size: 20px;
+    line-height: 1.6;
+    font-weight: 400;
+    color: #5a1a3a;
+    min-height: 120px;
 }
 
 /* BUTTON */
 #nextBtn {
-    margin-top: 15px;
+    margin-top: 20px;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(10px);}
+    to {opacity:1; transform: translateY(0);}
 }
 </style>
 </head>
@@ -63,15 +92,15 @@ img {
 
 <!-- PASSWORD -->
 <div id="passwordScreen">
-<h3>Enter the magic date 💖</h3>
+<h2>Enter the magic date 💖</h2>
 <input id="pass" type="password">
 <button onclick="checkPassword()">Enter</button>
 <p id="error"></p>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <div id="main">
-<h2>Juss 100 days to go jaan ❤️</h2>
+<h2 style="color:#d6336c;">Juss 100 days to go jaan ❤️</h2>
 
 <img id="image" src="img1.jpg">
 
@@ -105,6 +134,7 @@ function startMusic(){
 
 /* STORY */
 let i = 0;
+let typing = false;
 
 const story = [
 ["img1.jpg","HELLAWWWWWWWW MUNGOOOOOO, onli 100 days remain for the biggest festival of the year, the most important day that I have been waiting for a gazillion years jaanu."],
@@ -124,14 +154,40 @@ const story = [
 ["img8.jpg","Now my babie will finally step into 20s, but irrespectively, you'll always be my smol babie, always be in my godi jaan. Forever my everything you are jaan"]
 ];
 
-/* SHOW */
+/* TYPEWRITER + SMOOTH IMAGE TRANSITION */
 function show(){
-    document.getElementById("image").src = story[i][0];
-    document.getElementById("text").innerText = story[i][1];
+    const img = document.getElementById("image");
+    const textEl = document.getElementById("text");
+
+    img.style.opacity = 0;
+
+    setTimeout(() => {
+        img.src = story[i][0];
+        img.style.opacity = 1;
+    }, 200);
+
+    let fullText = story[i][1];
+    textEl.innerText = "";
+    let j = 0;
+    typing = true;
+
+    function type(){
+        if(j < fullText.length){
+            textEl.innerText += fullText[j];
+            j++;
+            setTimeout(type, 25);
+        } else {
+            typing = false;
+        }
+    }
+
+    type();
 }
 
 /* NEXT */
 function next(){
+    if(typing) return;
+
     i++;
     if(i < story.length){
         show();
