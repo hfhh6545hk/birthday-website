@@ -5,170 +5,140 @@
 <title>For You ❤️</title>
 
 <style>
-body{margin:0;font-family:sans-serif;overflow:hidden}
-
-/* PASSWORD */
-#ps{
-position:fixed;width:100%;height:100%;
-display:flex;flex-direction:column;
-justify-content:center;align-items:center;
-background:#ffd6e8;z-index:10;
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #fff0f5;
+    text-align: center;
 }
 
-/* INTRO */
-#intro{
-display:none;position:fixed;width:100%;height:100%;
-background:#ffeaf4;
-justify-content:center;align-items:center;flex-direction:column;
+/* PASSWORD */
+#passwordScreen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #ffd6e8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+input {
+    padding: 10px;
+    margin: 10px;
+}
+
+button {
+    padding: 10px;
 }
 
 /* MAIN */
-#main{
-display:none;height:100vh;
-display:flex;justify-content:center;align-items:center;
-background:#fff0f5;
+#main {
+    display: none;
+    padding: 20px;
 }
 
-#bow{font-size:70px;cursor:pointer}
-
-.container{position:relative}
-
-.memory{
-position:absolute;width:100px;height:100px;
-opacity:0;transform:scale(0);transition:.5s;cursor:pointer;
-}
-.memory img{width:100%;border-radius:10px}
-
-.active .memory{opacity:1;transform:scale(1)}
-
-/* circle */
-.active .m1{transform:translate(0,-200px)}
-.active .m2{transform:translate(150px,-150px)}
-.active .m3{transform:translate(200px,0)}
-.active .m4{transform:translate(150px,150px)}
-.active .m5{transform:translate(0,200px)}
-.active .m6{transform:translate(-150px,150px)}
-.active .m7{transform:translate(-200px,0)}
-.active .m8{transform:translate(-150px,-150px)}
-
-/* MODAL */
-#modal{
-position:fixed;width:100%;height:100%;
-background:rgba(0,0,0,.6);
-display:none;justify-content:center;align-items:center;
+/* IMAGE */
+img {
+    width: 80%;
+    max-width: 300px;
+    border-radius: 10px;
 }
 
-.box{
-background:white;padding:15px;border-radius:10px;width:280px;text-align:center
+/* TEXT */
+#text {
+    margin-top: 15px;
+    font-size: 16px;
 }
-.box img{width:100%}
 
+/* BUTTON */
+#nextBtn {
+    margin-top: 15px;
+}
 </style>
 </head>
 
 <body>
 
 <!-- PASSWORD -->
-<div id="ps">
+<div id="passwordScreen">
 <h3>Enter the magic date 💖</h3>
-<input id="p" type="password">
-<button onclick="check()">Enter</button>
-<p id="err"></p>
+<input id="pass" type="password">
+<button onclick="checkPassword()">Enter</button>
+<p id="error"></p>
 </div>
 
-<!-- INTRO -->
-<div id="intro">
-<h1>Juss 100 days to go jaan ❤️</h1>
-<p>Tap</p>
-</div>
-
-<!-- MAIN -->
+<!-- MAIN CONTENT -->
 <div id="main">
-<div class="container" id="c">
+<h2>Juss 100 days to go jaan ❤️</h2>
 
-<div id="bow">🎀</div>
+<img id="image" src="img1.jpg">
 
-<div class="memory m1"><img src="img1.jpg"></div>
-<div class="memory m2"><img src="img2.jpg"></div>
-<div class="memory m3"><img src="img3.jpg"></div>
-<div class="memory m4"><img src="img4.jpg"></div>
-<div class="memory m5"><img src="img5.jpg"></div>
-<div class="memory m6"><img src="img6.jpg"></div>
-<div class="memory m7"><img src="img7.jpg"></div>
-<div class="memory m8"><img src="img8.jpg"></div>
-
-</div>
-</div>
-
-<!-- MODAL -->
-<div id="modal">
-<div class="box">
-<img id="img">
 <p id="text"></p>
-<button onclick="next()">Next</button>
+
+<button id="nextBtn" onclick="next()">Next →</button>
 </div>
-</div>
+
+<audio id="music" src="music.mp3" loop></audio>
 
 <script>
 
 /* PASSWORD */
-function check(){
-if(document.getElementById("p").value==="080805"){
-document.getElementById("ps").style.display="none";
-document.getElementById("intro").style.display="flex";
-document.getElementById("main").style.display="flex";
-}else document.getElementById("err").innerText="Wrong date";
+function checkPassword(){
+    if(document.getElementById("pass").value === "080805"){
+        document.getElementById("passwordScreen").style.display = "none";
+        document.getElementById("main").style.display = "block";
+        show();
+        startMusic();
+    } else {
+        document.getElementById("error").innerText = "Wrong date";
+    }
 }
 
-/* INTRO CLICK */
-document.getElementById("intro").onclick=function(){
-this.style.display="none";
+/* MUSIC */
+function startMusic(){
+    let m = document.getElementById("music");
+    m.volume = 0.4;
+    m.play().catch(()=>{});
 }
 
-/* BOW CLICK */
-document.getElementById("bow").onclick=function(){
-document.getElementById("c").classList.add("active");
-}
+/* STORY */
+let i = 0;
 
-/* STORY (YOUR EXACT TEXT) */
-let i=0;
+const story = [
+["img1.jpg","HELLAWWWWWWWW MUNGOOOOOO, onli 100 days remain for the biggest festival of the year, the most important day that I have been waiting for a gazillion years jaanu."],
 
-const story=[
-["img1.jpg",`HELLAWWWWWWWW MUNGOOOOOO, onli 100 days remain for the biggest festival of the year, the most important day that I have been waiting for a gazillion years jaanu.`],
+["img2.jpg","My lovely babie seems to grow up so fas, juss yesterday we celebrated my jaanu ka 20th birthday and here we go, the twentieth is juss around the corner now"],
 
-["img2.jpg",`My lovely babie seems to grow up so fas, juss yesterday we celebrated my jaanu ka 20th birthday and here we go, the twentieth is juss around the corner now`],
+["img3.jpg","I love you sooooo much jaanu, my babie is the best thing to have ever happened to me. There can never be a person remotely as good as you jaan, you are perfect in every way imaginable jaanu"],
 
-["img3.jpg",`I love you sooooo much jaanu, my babie is the best thing to have ever happened to me. There can never be a person remotely as good as you jaan, you are perfect in every way imaginable jaanu`],
+["img4.jpg","My babie has grown so much over the years we have known each other. The veri fact that my jaanu chose to trust me even after going through a lot is the biggest proof jaan that we are meant to be jaan"],
 
-["img4.jpg",`My babie has grown so much over the years we have known each other. The veri fact that my jaanu chose to trust me even after going through a lot is the biggest proof jaan that we are meant to be jaan`],
+["img5.jpg","Everything that you want in life, we will give it our all jaan to make it a reality, we will never let go of each other's hand and become winners together"],
 
-["img5.jpg",`Everything that you want in life, we will give it our all jaan to make it a reality, we will never let go of each other's hand and become winners together`],
+["img6.jpg","Thank you so much for always choosing me jaan, for always standing beside me and always trusting me. Nothing gives me more strength than knowing jaan that you are there with me"],
 
-["img6.jpg",`Thank you so much for always choosing me jaan, for always standing beside me and always trusting me. Nothing gives me more strength than knowing jaan that you are there with me`],
+["img7.jpg","I will forever be indebted to you jaan, no matter wut I do for you, it will never be enough jaanu. Thenk you so much for making me your ajjo jaanu, thenk you soooooooo much"],
 
-["img7.jpg",`I will forever be indebted to you jaan, no matter wut I do for you, it will never be enough jaanu. Thenk you so much for making me your ajjo jaanu, thenk you soooooooo much`],
-
-["img8.jpg",`Now my babie will finally step into 20s, but irrespectively, you'll always be my smol babie, always be in my godi jaan. Forever my everything you are jaan`]
+["img8.jpg","Now my babie will finally step into 20s, but irrespectively, you'll always be my smol babie, always be in my godi jaan. Forever my everything you are jaan"]
 ];
 
-/* CLICK ANY IMAGE */
-document.querySelectorAll(".memory").forEach(el=>{
-el.onclick=function(){
-i=0;
-show();
-}
-});
-
+/* SHOW */
 function show(){
-document.getElementById("modal").style.display="flex";
-document.getElementById("img").src=story[i][0];
-document.getElementById("text").innerText=story[i][1];
+    document.getElementById("image").src = story[i][0];
+    document.getElementById("text").innerText = story[i][1];
 }
 
+/* NEXT */
 function next(){
-i++;
-if(i<story.length) show();
-else document.getElementById("modal").style.display="none";
+    i++;
+    if(i < story.length){
+        show();
+    } else {
+        document.getElementById("text").innerText = "❤️";
+        document.getElementById("nextBtn").style.display = "none";
+    }
 }
 
 </script>
