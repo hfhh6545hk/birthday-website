@@ -2,18 +2,16 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
 <title>For You ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #fff0f5, #ffe4ec);
+    background: linear-gradient(135deg,#fff0f5,#ffe4ec);
     text-align: center;
-    overflow: hidden;
 }
 
 /* PASSWORD */
@@ -21,36 +19,17 @@ body {
     position: fixed;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #ffd6e8, #ffeaf4);
+    background: #ffd6e8;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-/* INPUT */
-input {
-    padding: 12px;
-    margin: 10px;
-    border-radius: 8px;
-    border: none;
-    font-size: 16px;
-}
-
-button {
-    padding: 10px 18px;
-    border: none;
-    border-radius: 8px;
-    background: #ff4d88;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
-
 /* MAIN */
 #main {
     display: none;
-    padding: 30px 15px;
+    padding: 20px;
 }
 
 /* IMAGE */
@@ -59,128 +38,106 @@ img {
     max-width: 320px;
     height: 320px;
     object-fit: cover;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    transition: opacity 0.5s ease;
+    border-radius: 15px;
 }
 
 /* TEXT */
 #text {
     margin: 20px auto;
     font-size: 20px;
-    line-height: 1.6;
-    color: #5a1a3a;
     max-width: 320px;
-    width: 90%;
     white-space: pre-line;
 }
 
 /* BUTTON */
-#nextBtn {
-    margin-top: 20px;
+button {
+    padding: 10px;
+    margin-top: 15px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- PASSWORD -->
 <div id="passwordScreen">
-<h2>Enter the magic date 💖</h2>
-<input id="pass" type="password">
-<button onclick="checkPassword()">Enter</button>
-<p id="error"></p>
+<h3>Enter the magic date 💖</h3>
+<input id="pass">
+<button onclick="login()">Enter</button>
+<p id="err"></p>
 </div>
 
-<!-- MAIN -->
 <div id="main">
-<h2 style="color:#d6336c;">Juss 100 days to go jaan ❤️</h2>
+<h2>Juss 100 days to go jaan ❤️</h2>
 
-<img id="image" src="img1.jpg">
+<img id="img">
 
 <p id="text"></p>
 
-<button id="nextBtn" onclick="next()">Next →</button>
+<button onclick="next()">Next</button>
 </div>
 
 <audio id="music" src="music.mp3" loop></audio>
 
 <script>
 
-/* PASSWORD */
-function checkPassword(){
-    if(document.getElementById("pass").value === "080805"){
-        document.getElementById("passwordScreen").style.display = "none";
-        document.getElementById("main").style.display = "block";
-        show();
-        startMusic();
+/* LOGIN */
+function login(){
+    if(document.getElementById("pass").value==="080805"){
+        document.getElementById("passwordScreen").style.display="none";
+        document.getElementById("main").style.display="block";
+        start();
     } else {
-        document.getElementById("error").innerText = "Wrong date";
+        document.getElementById("err").innerText="Wrong date";
     }
 }
 
 /* MUSIC */
-function startMusic(){
-    let m = document.getElementById("music");
-    m.volume = 0.4;
+function start(){
+    let m=document.getElementById("music");
+    m.volume=0.4;
     m.play().catch(()=>{});
+    show();
 }
 
 /* STORY */
-let i = 0;
-let typing = false;
+let i=0;
+let typing=false;
 
-const story = [
+const story=[
 ["img1.jpg","HELLAWWWWWWWW MUNGOOOOOO, onli 100 days remain for the biggest festival of the year, the most important day that I have been waiting for a gazillion years jaanu."],
-
 ["img2.jpg","My lovely babie seems to grow up so fas, juss yesterday we celebrated my jaanu ka 20th birthday and here we go, the twentieth is juss around the corner now"],
-
 ["img3.jpg","I love you sooooo much jaanu, my babie is the best thing to have ever happened to me. There can never be a person remotely as good as you jaan, you are perfect in every way imaginable jaanu"],
-
 ["img4.jpg","My babie has grown so much over the years we have known each other. The veri fact that my jaanu chose to trust me even after going through a lot is the biggest proof jaan that we are meant to be jaan"],
-
 ["img5.jpg","Everything that you want in life, we will give it our all jaan to make it a reality, we will never let go of each other's hand and become winners together"],
-
 ["img6.jpg","Thank you so much for always choosing me jaan, for always standing beside me and always trusting me. Nothing gives me more strength than knowing jaan that you are there with me"],
-
 ["img7.jpg","I will forever be indebted to you jaan, no matter wut I do for you, it will never be enough jaanu. Thenk you so much for making me your ajjo jaanu, thenk you soooooooo much"],
-
 ["img8.jpg","Now my babie will finally step into 20s, but irrespectively, you'll always be my smol babie, always be in my godi jaan. Forever my everything you are jaan"]
 ];
 
 /* SHOW */
 function show(){
-    const img = document.getElementById("image");
-    const textEl = document.getElementById("text");
+    let img=document.getElementById("img");
+    let text=document.getElementById("text");
 
-    img.style.opacity = 0;
+    img.src=story[i][0];
 
-    setTimeout(() => {
-        img.src = story[i][0];
-        img.style.opacity = 1;
-    }, 200);
+    let t=story[i][1];
 
-    let fullText = story[i][1];
+    /* split into 2 lines */
+    let mid=Math.floor(t.length/2);
+    while(mid<t.length && t[mid]!==" ") mid++;
+    let final=t.slice(0,mid)+"\n"+t.slice(mid+1);
 
-    // split into 2 lines
-    let mid = Math.floor(fullText.length / 2);
-    while(mid < fullText.length && fullText[mid] !== " ") mid++;
-
-    let finalText = fullText.substring(0, mid) + "\n" + fullText.substring(mid + 1);
-
-    textEl.innerText = "";
-    typing = true;
-
-    let j = 0;
+    let j=0;
+    typing=true;
 
     function type(){
-        textEl.innerText = finalText.substring(0, j + 1);
+        text.innerText=final.slice(0,j);
         j++;
-
-        if(j < finalText.length){
-            setTimeout(type, 30);
+        if(j<=final.length){
+            setTimeout(type,30);
         } else {
-            typing = false;
+            typing=false;
         }
     }
 
@@ -190,63 +147,42 @@ function show(){
 /* NEXT */
 function next(){
     if(typing) return;
-
     i++;
-    if(i < story.length){
+    if(i<story.length){
         show();
     } else {
-        document.getElementById("text").innerText = "❤️";
-        document.getElementById("nextBtn").style.display = "none";
+        document.getElementById("text").innerText="❤️";
     }
 }
 
 /* CURSOR HEARTS */
-document.addEventListener("mousemove", function(e){
-    let heart = document.createElement("div");
-    heart.innerHTML = "❤️";
-    heart.style.position = "fixed";
-    heart.style.left = e.clientX + "px";
-    heart.style.top = e.clientY + "px";
-    heart.style.pointerEvents = "none";
-    heart.style.fontSize = "14px";
-    heart.style.transition = "all 0.8s ease";
+document.addEventListener("mousemove",e=>{
+    let h=document.createElement("div");
+    h.innerText="❤️";
+    h.style.position="fixed";
+    h.style.left=e.clientX+"px";
+    h.style.top=e.clientY+"px";
+    h.style.fontSize="12px";
+    document.body.appendChild(h);
 
-    document.body.appendChild(heart);
-
-    setTimeout(()=>{
-        heart.style.top = (e.clientY - 30) + "px";
-        heart.style.opacity = "0";
-    },10);
-
-    setTimeout(()=>{
-        heart.remove();
-    },800);
+    setTimeout(()=>h.remove(),700);
 });
 
-/* BACKGROUND HEARTS */
+/* FLOAT HEARTS */
 setInterval(()=>{
-    let heart = document.createElement("div");
-    heart.innerHTML = "💖";
-    heart.style.position = "fixed";
-    heart.style.left = Math.random() * window.innerWidth + "px";
-    heart.style.bottom = "-20px";
-    heart.style.fontSize = (12 + Math.random()*10) + "px";
-    heart.style.opacity = "0.6";
-    heart.style.pointerEvents = "none";
-    heart.style.transition = "all 6s linear";
-
-    document.body.appendChild(heart);
+    let h=document.createElement("div");
+    h.innerText="💖";
+    h.style.position="fixed";
+    h.style.left=Math.random()*window.innerWidth+"px";
+    h.style.bottom="-20px";
+    document.body.appendChild(h);
 
     setTimeout(()=>{
-        heart.style.bottom = "110vh";
-        heart.style.opacity = "0";
-    },50);
+        h.style.transform="translateY(-110vh)";
+    },10);
 
-    setTimeout(()=>{
-        heart.remove();
-    },6000);
-
-}, 700);
+    setTimeout(()=>h.remove(),5000);
+},800);
 
 </script>
 
