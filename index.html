@@ -1,193 +1,176 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For You ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You ❤️</title>
 
-    <style>
-        body { margin: 0; font-family: sans-serif; overflow: hidden; background: #fff0f5; }
+<style>
+body{margin:0;font-family:sans-serif;overflow:hidden}
 
-        /* PASSWORD */
-        #ps {
-            position: fixed; width: 100%; height: 100%;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            background: #ffd6e8; z-index: 100;
-        }
+/* PASSWORD */
+#ps{
+position:fixed;width:100%;height:100%;
+display:flex;flex-direction:column;
+justify-content:center;align-items:center;
+background:#ffd6e8;z-index:10;
+}
 
-        #ps input {
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid #ff99cc;
-            margin: 10px;
-            text-align: center;
-            font-size: 16px;
-        }
+/* INTRO */
+#intro{
+display:none;position:fixed;width:100%;height:100%;
+background:#ffeaf4;
+justify-content:center;align-items:center;flex-direction:column;
+}
 
-        /* INTRO */
-        #intro {
-            display: none; position: fixed; width: 100%; height: 100%;
-            background: #ffeaf4; z-index: 50;
-            justify-content: center; align-items: center; flex-direction: column;
-            text-align: center; cursor: pointer;
-        }
+/* MAIN */
+#main{
+display:none;height:100vh;
+display:flex;justify-content:center;align-items:center;
+background:#fff0f5;
+}
 
-        /* MAIN */
-        #main {
-            display: none; height: 100vh;
-            justify-content: center; align-items: center;
-        }
+#bow{font-size:70px;cursor:pointer}
 
-        #bow { font-size: 70px; cursor: pointer; z-index: 5; position: relative; }
+.container{position:relative}
 
-        .container { position: relative; display: flex; justify-content: center; align-items: center; }
+.memory{
+position:absolute;width:100px;height:100px;
+opacity:0;transform:scale(0);transition:.5s;cursor:pointer;
+}
+.memory img{width:100%;border-radius:10px}
 
-        .memory {
-            position: absolute; width: 80px; height: 80px;
-            opacity: 0; transform: scale(0); transition: .8s; cursor: pointer;
-            z-index: 2;
-        }
-        .memory img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; border: 3px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.active .memory{opacity:1;transform:scale(1)}
 
-        .active .memory { opacity: 1; }
+/* circle */
+.active .m1{transform:translate(0,-200px)}
+.active .m2{transform:translate(150px,-150px)}
+.active .m3{transform:translate(200px,0)}
+.active .m4{transform:translate(150px,150px)}
+.active .m5{transform:translate(0,200px)}
+.active .m6{transform:translate(-150px,150px)}
+.active .m7{transform:translate(-200px,0)}
+.active .m8{transform:translate(-150px,-150px)}
 
-        /* Circle positions */
-        .active .m1 { transform: translate(0, -180px) scale(1); }
-        .active .m2 { transform: translate(130px, -130px) scale(1); }
-        .active .m3 { transform: translate(180px, 0) scale(1); }
-        .active .m4 { transform: translate(130px, 130px) scale(1); }
-        .active .m5 { transform: translate(0, 180px) scale(1); }
-        .active .m6 { transform: translate(-130px, 130px) scale(1); }
-        .active .m7 { transform: translate(-180px, 0) scale(1); }
-        .active .m8 { transform: translate(-130px, -130px) scale(1); }
+/* MODAL */
+#modal{
+position:fixed;width:100%;height:100%;
+background:rgba(0,0,0,.6);
+display:none;justify-content:center;align-items:center;
+}
 
-        /* MODAL */
-        #modal {
-            position: fixed; width: 100%; height: 100%;
-            background: rgba(0,0,0,.8);
-            display: none; justify-content: center; align-items: center;
-            z-index: 200;
-        }
+.box{
+background:white;padding:15px;border-radius:10px;width:280px;text-align:center
+}
+.box img{width:100%}
 
-        .box {
-            background: white; padding: 20px; border-radius: 15px; 
-            width: 85%; max-width: 320px; text-align: center;
-        }
-        .box img { width: 100%; border-radius: 10px; margin-bottom: 10px; }
-        .box p { font-size: 14px; line-height: 1.5; color: #444; }
-        
-        button {
-            background: #ff4d94; color: white; border: none; 
-            padding: 12px 24px; border-radius: 20px; cursor: pointer; margin-top: 10px;
-            font-weight: bold;
-        }
-    </style>
+</style>
 </head>
 
 <body>
 
 <!-- PASSWORD -->
 <div id="ps">
-    <h3>Enter the magic date 💖</h3>
-    <input id="p" type="password" placeholder="DDMMYY">
-    <button onclick="check()">Enter</button>
-    <p id="err" style="color: red; font-size: 14px; margin-top: 10px;"></p>
+<h3>Enter the magic date 💖</h3>
+<input id="p" type="password">
+<button onclick="check()">Enter</button>
+<p id="err"></p>
 </div>
 
 <!-- INTRO -->
 <div id="intro">
-    <h1 style="padding: 20px; color: #ff4d94;">Juss 100 days to go jaan ❤️</h1>
-    <p style="color: #666;">(Tap anywhere to continue)</p>
+<h1>Juss 100 days to go jaan ❤️</h1>
+<p>Tap</p>
 </div>
 
 <!-- MAIN -->
 <div id="main">
-    <div class="container" id="c">
-        <div id="bow">🎀</div>
-        <div class="memory m1" onclick="openStory(0)"><img src="img1.jpg"></div>
-        <div class="memory m2" onclick="openStory(1)"><img src="img2.jpg"></div>
-        <div class="memory m3" onclick="openStory(2)"><img src="img3.jpg"></div>
-        <div class="memory m4" onclick="openStory(3)"><img src="img4.jpg"></div>
-        <div class="memory m5" onclick="openStory(4)"><img src="img5.jpg"></div>
-        <div class="memory m6" onclick="openStory(5)"><img src="img6.jpg"></div>
-        <div class="memory m7" onclick="openStory(6)"><img src="img7.jpg"></div>
-        <div class="memory m8" onclick="openStory(7)"><img src="img8.jpg"></div>
-    </div>
+<div class="container" id="c">
+
+<div id="bow">🎀</div>
+
+<div class="memory m1"><img src="img1.jpg"></div>
+<div class="memory m2"><img src="img2.jpg"></div>
+<div class="memory m3"><img src="img3.jpg"></div>
+<div class="memory m4"><img src="img4.jpg"></div>
+<div class="memory m5"><img src="img5.jpg"></div>
+<div class="memory m6"><img src="img6.jpg"></div>
+<div class="memory m7"><img src="img7.jpg"></div>
+<div class="memory m8"><img src="img8.jpg"></div>
+
+</div>
 </div>
 
 <!-- MODAL -->
 <div id="modal">
-    <div class="box">
-        <img id="img_content">
-        <p id="text_content"></p>
-        <button onclick="nextSlide()">Next ❤️</button>
-        <button onclick="closeModal()" style="background:#ccc; color: #333;">Close</button>
-    </div>
+<div class="box">
+<img id="img">
+<p id="text"></p>
+<button onclick="next()">Next</button>
+</div>
 </div>
 
 <script>
-let currentIdx = 0;
 
-const story = [
-    ["img1.jpg", `HELLAWWWWWWWW MUNGOOOOOO, onli 100 days remain for the biggest festival of the year, the most important day that I have been waiting for a gazillion years jaanu.`],
-    ["img2.jpg", `My lovely babie seems to grow up so fas, juss yesterday we celebrated my jaanu ka 20th birthday and here we go, the twentieth is juss around the corner now`],
-    ["img3.jpg", `I love you sooooo much jaanu, my babie is the best thing to have ever happened to me. There can never be a person remotely as good as you jaan, you are perfect in every way imaginable jaanu`],
-    ["img4.jpg", `My babie has grown so much over the years we have known each other. The veri fact that my jaanu chose to trust me even after going through a lot is the biggest proof jaan that we are meant to be jaan`],
-    ["img5.jpg", `Everything that you want in life, we will give it our all jaan to make it a reality, we will never let go of each other's hand and become winners together`],
-    ["img6.jpg", `Thank you so much for always choosing me jaan, for always standing beside me and always trusting me. Nothing gives me more strength than knowing jaan that you are there with me`],
-    ["img7.jpg", `I will forever be indebted to you jaan, no matter wut I do for you, it will never be enough jaanu. Thenk you so much for making me your ajjo jaanu, thenk you soooooooo much`],
-    ["img8.jpg", `Now my babie will finally step into 20s, but irrespectively, you'll always be my smol babie, always be in my godi jaan. Forever my everything you are jaan`]
+/* PASSWORD */
+function check(){
+if(document.getElementById("p").value==="080805"){
+document.getElementById("ps").style.display="none";
+document.getElementById("intro").style.display="flex";
+document.getElementById("main").style.display="flex";
+}else document.getElementById("err").innerText="Wrong date";
+}
+
+/* INTRO CLICK */
+document.getElementById("intro").onclick=function(){
+this.style.display="none";
+}
+
+/* BOW CLICK */
+document.getElementById("bow").onclick=function(){
+document.getElementById("c").classList.add("active");
+}
+
+/* STORY (YOUR EXACT TEXT) */
+let i=0;
+
+const story=[
+["img1.jpg",`HELLAWWWWWWWW MUNGOOOOOO, onli 100 days remain for the biggest festival of the year, the most important day that I have been waiting for a gazillion years jaanu.`],
+
+["img2.jpg",`My lovely babie seems to grow up so fas, juss yesterday we celebrated my jaanu ka 20th birthday and here we go, the twentieth is juss around the corner now`],
+
+["img3.jpg",`I love you sooooo much jaanu, my babie is the best thing to have ever happened to me. There can never be a person remotely as good as you jaan, you are perfect in every way imaginable jaanu`],
+
+["img4.jpg",`My babie has grown so much over the years we have known each other. The veri fact that my jaanu chose to trust me even after going through a lot is the biggest proof jaan that we are meant to be jaan`],
+
+["img5.jpg",`Everything that you want in life, we will give it our all jaan to make it a reality, we will never let go of each other's hand and become winners together`],
+
+["img6.jpg",`Thank you so much for always choosing me jaan, for always standing beside me and always trusting me. Nothing gives me more strength than knowing jaan that you are there with me`],
+
+["img7.jpg",`I will forever be indebted to you jaan, no matter wut I do for you, it will never be enough jaanu. Thenk you so much for making me your ajjo jaanu, thenk you soooooooo much`],
+
+["img8.jpg",`Now my babie will finally step into 20s, but irrespectively, you'll always be my smol babie, always be in my godi jaan. Forever my everything you are jaan`]
 ];
 
-function check() {
-    // Check password logic
-    if(document.getElementById("p").value === "080805") {
-        document.getElementById("ps").style.display = "none";
-        document.getElementById("intro").style.display = "flex";
-    } else {
-        document.getElementById("err").innerText = "Wrong date, try again!";
-    }
+/* CLICK ANY IMAGE */
+document.querySelectorAll(".memory").forEach(el=>{
+el.onclick=function(){
+i=0;
+show();
 }
-
-// Allow Enter key for password
-document.getElementById("p").addEventListener("keyup", function(event) {
-    if (event.key === "Enter") {
-        check();
-    }
 });
 
-document.getElementById("intro").onclick = function() {
-    this.style.display = "none";
-    document.getElementById("main").style.display = "flex";
+function show(){
+document.getElementById("modal").style.display="flex";
+document.getElementById("img").src=story[i][0];
+document.getElementById("text").innerText=story[i][1];
 }
 
-document.getElementById("bow").onclick = function() {
-    document.getElementById("c").classList.toggle("active");
+function next(){
+i++;
+if(i<story.length) show();
+else document.getElementById("modal").style.display="none";
 }
 
-function openStory(index) {
-    currentIdx = index;
-    showSlide();
-}
-
-function showSlide() {
-    document.getElementById("modal").style.display = "flex";
-    document.getElementById("img_content").src = story[currentIdx][0];
-    document.getElementById("text_content").innerText = story[currentIdx][1];
-}
-
-function nextSlide() {
-    currentIdx++;
-    if(currentIdx < story.length) {
-        showSlide();
-    } else {
-        closeModal();
-    }
-}
-
-function closeModal() {
-    document.getElementById("modal").style.display = "none";
-}
 </script>
 
 </body>
