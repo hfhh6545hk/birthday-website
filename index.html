@@ -1,183 +1,137 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For You ❤️</title>
 
 <style>
-body { margin:0; font-family:'Segoe UI'; overflow:hidden; }
+body{margin:0;font-family:sans-serif;overflow:hidden}
 
 /* PASSWORD */
-.password-screen {
-position:fixed; width:100%; height:100%;
-background:linear-gradient(135deg,#ffd6e8,#ffeaf4);
-display:flex; flex-direction:column; justify-content:center; align-items:center;
-z-index:20;
+#ps{
+position:fixed;width:100%;height:100%;
+display:flex;flex-direction:column;
+justify-content:center;align-items:center;
+background:#ffd6e8;z-index:10;
 }
-input,button{padding:10px;border-radius:8px;border:none;margin:5px;}
-button{background:#ff4d88;color:white;}
-.error{color:red;}
 
 /* INTRO */
-.intro {
-position:fixed;width:100%;height:100%;
-background:linear-gradient(135deg,#ffd6e8,#ffeaf4);
-display:none;justify-content:center;align-items:center;flex-direction:column;
+#intro{
+display:none;position:fixed;width:100%;height:100%;
+background:#ffeaf4;
+justify-content:center;align-items:center;flex-direction:column;
 }
-.intro h1{color:#d6336c;}
 
 /* MAIN */
-.main {
-height:100vh;
-background:linear-gradient(135deg,#fff0f5,#ffe4e1);
+#main{
+display:none;height:100vh;
+display:flex;justify-content:center;align-items:center;
+background:#fff0f5;
+}
+
+#bow{font-size:70px;cursor:pointer}
+
+.container{position:relative}
+
+.memory{
+position:absolute;width:100px;height:100px;
+opacity:0;transform:scale(0);transition:.5s;cursor:pointer;
+}
+.memory img{width:100%;border-radius:10px}
+
+.active .memory{opacity:1;transform:scale(1)}
+
+/* circle */
+.active .m1{transform:translate(0,-200px)}
+.active .m2{transform:translate(150px,-150px)}
+.active .m3{transform:translate(200px,0)}
+.active .m4{transform:translate(150px,150px)}
+.active .m5{transform:translate(0,200px)}
+.active .m6{transform:translate(-150px,150px)}
+.active .m7{transform:translate(-200px,0)}
+.active .m8{transform:translate(-150px,-150px)}
+
+/* MODAL */
+#modal{
+position:fixed;width:100%;height:100%;
+background:rgba(0,0,0,.6);
 display:none;justify-content:center;align-items:center;
 }
 
-#bow{font-size:70px;cursor:pointer;}
-
-.container{position:relative;}
-
-.memory{
-position:absolute;width:110px;height:110px;
-opacity:0;transform:scale(0);transition:.8s;cursor:pointer;
+.box{
+background:white;padding:15px;border-radius:10px;width:280px;text-align:center
 }
-.memory img{width:100%;border-radius:12px;}
+.box img{width:100%}
 
-.container.active .memory{opacity:1;transform:scale(1);}
-
-/* circle */
-.container.active .m1{transform:translate(0,-220px);}
-.container.active .m2{transform:translate(150px,-150px);}
-.container.active .m3{transform:translate(220px,0);}
-.container.active .m4{transform:translate(150px,150px);}
-.container.active .m5{transform:translate(0,220px);}
-.container.active .m6{transform:translate(-150px,150px);}
-.container.active .m7{transform:translate(-220px,0);}
-.container.active .m8{transform:translate(-150px,-150px);}
-
-/* MODAL */
-.modal{
-position:fixed;width:100%;height:100%;
-background:rgba(0,0,0,0.6);
-display:flex;justify-content:center;align-items:center;
-opacity:0;pointer-events:none;
-}
-.modal.active{opacity:1;pointer-events:all;}
-
-.modal-content{
-background:white;padding:20px;border-radius:16px;
-max-width:320px;text-align:center;
-}
-.modal-content img{width:100%;border-radius:12px;}
-.modal-content p{white-space:pre-line;}
-.next{margin-top:10px;color:#d6336c;cursor:pointer;}
-
-/* hearts */
-.heart{
-position:fixed;color:#ff4d88;
-animation:floatUp 1s linear forwards;
-}
-@keyframes floatUp{
-to{transform:translateY(-30px);opacity:0;}
-}
-
-.bg-heart{
-position:fixed;bottom:-20px;
-animation:floatHeart 8s linear infinite;
-}
-@keyframes floatHeart{
-to{transform:translateY(-110vh);}
-}
 </style>
 </head>
 
 <body>
 
 <!-- PASSWORD -->
-<div class="password-screen" id="ps">
-<h2>Enter the magic date 💖</h2>
+<div id="ps">
+<h3>Enter the magic date 💖</h3>
 <input id="p" type="password">
 <button onclick="check()">Enter</button>
-<div class="error" id="e"></div>
+<p id="err"></p>
 </div>
 
 <!-- INTRO -->
-<div class="intro" id="intro">
+<div id="intro">
 <h1>Juss 100 days to go jaan ❤️</h1>
 <p>Tap</p>
 </div>
 
 <!-- MAIN -->
-<div class="main" id="main">
+<div id="main">
 <div class="container" id="c">
+
 <div id="bow">🎀</div>
 
-<div class="memory m1" onclick="start()"><img src="img1.jpg"></div>
-<div class="memory m2" onclick="start()"><img src="img2.jpg"></div>
-<div class="memory m3" onclick="start()"><img src="img3.jpg"></div>
-<div class="memory m4" onclick="start()"><img src="img4.jpg"></div>
-<div class="memory m5" onclick="start()"><img src="img5.jpg"></div>
-<div class="memory m6" onclick="start()"><img src="img6.jpg"></div>
-<div class="memory m7" onclick="start()"><img src="img7.jpg"></div>
-<div class="memory m8" onclick="start()"><img src="img8.jpg"></div>
+<div class="memory m1"><img src="img1.jpg"></div>
+<div class="memory m2"><img src="img2.jpg"></div>
+<div class="memory m3"><img src="img3.jpg"></div>
+<div class="memory m4"><img src="img4.jpg"></div>
+<div class="memory m5"><img src="img5.jpg"></div>
+<div class="memory m6"><img src="img6.jpg"></div>
+<div class="memory m7"><img src="img7.jpg"></div>
+<div class="memory m8"><img src="img8.jpg"></div>
+
 </div>
 </div>
 
 <!-- MODAL -->
-<div class="modal" id="m">
-<div class="modal-content">
-<img id="im">
-<p id="tx"></p>
-<div class="next" onclick="next()">Next →</div>
+<div id="modal">
+<div class="box">
+<img id="img">
+<p id="text"></p>
+<button onclick="next()">Next</button>
 </div>
 </div>
-
-<audio id="music" src="music.mp3" loop></audio>
 
 <script>
 
-/* password */
+/* PASSWORD */
 function check(){
 if(document.getElementById("p").value==="080805"){
 document.getElementById("ps").style.display="none";
 document.getElementById("intro").style.display="flex";
 document.getElementById("main").style.display="flex";
-}else document.getElementById("e").innerText="Wrong date";
+}else document.getElementById("err").innerText="Wrong date";
 }
 
-/* intro */
-document.getElementById("intro").onclick=()=>{
-document.getElementById("intro").style.display="none";
+/* INTRO CLICK */
+document.getElementById("intro").onclick=function(){
+this.style.display="none";
 }
 
-/* bow */
-document.getElementById("bow").onclick=()=>{
+/* BOW CLICK */
+document.getElementById("bow").onclick=function(){
 document.getElementById("c").classList.add("active");
 }
 
-/* hearts */
-document.addEventListener("mousemove",e=>{
-let h=document.createElement("div");
-h.className="heart";
-h.innerText="❤️";
-h.style.left=e.clientX+"px";
-h.style.top=e.clientY+"px";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),1000);
-});
-
-setInterval(()=>{
-let h=document.createElement("div");
-h.className="bg-heart";
-h.innerText="❤️";
-h.style.left=Math.random()*window.innerWidth+"px";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),8000);
-},800);
-
 /* STORY (YOUR EXACT TEXT) */
-let i=0,typing=false;
+let i=0;
 
 const story=[
 ["img1.jpg",`HELLAWWWWWWWW MUNGOOOOOO, onli 100 days remain for the biggest festival of the year, the most important day that I have been waiting for a gazillion years jaanu.`],
@@ -197,35 +151,24 @@ const story=[
 ["img8.jpg",`Now my babie will finally step into 20s, but irrespectively, you'll always be my smol babie, always be in my godi jaan. Forever my everything you are jaan`]
 ];
 
-function start(){
-let m=document.getElementById("music");
-m.volume=0.4; m.play();
-i=0; show();
+/* CLICK ANY IMAGE */
+document.querySelectorAll(".memory").forEach(el=>{
+el.onclick=function(){
+i=0;
+show();
 }
+});
 
 function show(){
-document.getElementById("m").classList.add("active");
-document.getElementById("im").src=story[i][0];
-
-let t=story[i][1];
-let el=document.getElementById("tx");
-el.innerText="";
-let j=0; typing=true;
-
-function type(){
-if(j<t.length){
-el.innerText+=t[j++];
-setTimeout(type,30);
-}else typing=false;
-}
-type();
+document.getElementById("modal").style.display="flex";
+document.getElementById("img").src=story[i][0];
+document.getElementById("text").innerText=story[i][1];
 }
 
 function next(){
-if(typing) return;
 i++;
 if(i<story.length) show();
-else document.getElementById("m").classList.remove("active");
+else document.getElementById("modal").style.display="none";
 }
 
 </script>
