@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+}
+
+/* PASSWORD SCREEN */
+.password-screen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ffd6e8, #ffeaf4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 20;
+}
+
+.password-screen h2 {
+    color: #d6336c;
+    margin-bottom: 15px;
+}
+
+.password-screen input {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.password-screen button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #ff4d88;
+    color: white;
+    cursor: pointer;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* INTRO */
+.intro {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ffd6e8, #ffeaf4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 10;
+    transition: opacity 1s;
+}
+
+.intro h1 {
+    font-size: 42px;
+    color: #d6336c;
+    text-align: center;
+}
+
+/* MAIN */
+.main {
+    height: 100vh;
+    background: linear-gradient(135deg, #fff0f5, #ffe4e1);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+/* BOW */
+#bow {
+    font-size: 70px;
+    cursor: pointer;
+}
+
+/* CONTAINER */
+.container {
+    position: relative;
+}
+
+/* MEMORIES */
+.memory {
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    opacity: 0;
+    transform: scale(0);
+    transition: 0.8s;
+    cursor: pointer;
+}
+
+.memory img {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+}
+
+.container.active .memory {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* POSITIONS */
+.container.active .m1 { transform: translate(0, -220px);}
+.container.active .m2 { transform: translate(150px, -150px);}
+.container.active .m3 { transform: translate(220px, 0);}
+.container.active .m4 { transform: translate(150px, 150px);}
+.container.active .m5 { transform: translate(0, 220px);}
+.container.active .m6 { transform: translate(-150px, 150px);}
+.container.active .m7 { transform: translate(-220px, 0);}
+.container.active .m8 { transform: translate(-150px, -150px);}
+
+/* MODAL */
+.modal {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.4s;
+}
+
+.modal.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    max-width: 320px;
+    text-align: center;
+}
+
+.modal-content img {
+    width: 100%;
+    border-radius: 12px;
+}
+
+.modal-content p {
+    margin-top: 10px;
+    white-space: pre-line;
+}
+
+.next {
+    margin-top: 12px;
+    cursor: pointer;
+    color: #d6336c;
+    font-weight: bold;
+}
+
+.close {
+    margin-top: 6px;
+    cursor: pointer;
+    color: #888;
+}
+
+/* HEARTS */
+.heart {
+    position: fixed;
+    color: #ff4d88;
+    font-size: 16px;
+    pointer-events: none;
+    animation: floatUp 1s linear forwards;
+}
+
+@keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0);}
+    100% { opacity: 0; transform: translateY(-30px);}
+}
+
+.bg-heart {
+    position: fixed;
+    bottom: -20px;
+    color: #ff85a2;
+    animation: floatHeart 8s linear infinite;
+}
+
+@keyframes floatHeart {
+    0% { transform: translateY(0);}
+    100% { transform: translateY(-110vh);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- PASSWORD -->
+<div class="password-screen" id="passwordScreen">
+    <h2>Enter the magic date 💖</h2>
+    <input type="password" id="passwordInput" placeholder="Enter here">
+    <button onclick="checkPassword()">Enter</button>
+    <div class="error" id="error"></div>
+</div>
+
+<!-- INTRO -->
+<div class="intro" id="intro">
+    <h1>Juss 100 days to go jaan ❤️</h1>
+    <p>Tap anywhere</p>
+</div>
+
+<!-- MAIN -->
+<div class="main" id="main">
+    <div class="container" id="container">
+        <div id="bow">🎀</div>
+
+        <div class="memory m1" onclick="startStory()"><img src="img1.jpg"></div>
+        <div class="memory m2" onclick="startStory()"><img src="img2.jpg"></div>
+        <div class="memory m3" onclick="startStory()"><img src="img3.jpg"></div>
+        <div class="memory m4" onclick="startStory()"><img src="img4.jpg"></div>
+        <div class="memory m5" onclick="startStory()"><img src="img5.jpg"></div>
+        <div class="memory m6" onclick="startStory()"><img src="img6.jpg"></div>
+        <div class="memory m7" onclick="startStory()"><img src="img7.jpg"></div>
+        <div class="memory m8" onclick="startStory()"><img src="img8.jpg"></div>
+    </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <img id="modalImg">
+        <p id="modalText"></p>
+        <div class="next" onclick="next()">Next →</div>
+        <div class="close" onclick="closeModal()">Close</div>
+    </div>
+</div>
+
+<audio id="music" src="music.mp3" loop></audio>
+
+<script>
+
+/* PASSWORD CHECK */
+function checkPassword() {
+    const input = document.getElementById("passwordInput").value;
+    if (input === "080805") {
+        document.getElementById("passwordScreen").style.display = "none";
+        document.getElementById("intro").style.display = "flex";
+        document.getElementById("main").style.display = "flex";
+    } else {
+        document.getElementById("error").innerText = "Wrong date 😠";
+    }
+}
+
+/* INTRO */
+document.getElementById("intro").onclick = function() {
+    this.style.opacity = "0";
+    setTimeout(() => this.style.display = "none", 1000);
+};
+
+/* BOW */
+document.getElementById("bow").onclick = function() {
+    document.getElementById("container").classList.add("active");
+};
+
+/* HEARTS */
+document.addEventListener("mousemove", function(e) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "❤️";
+    heart.style.left = e.clientX + "px";
+    heart.style.top = e.clientY + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 1000);
+});
+
+setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "bg-heart";
+    heart.innerText = "❤️";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 8000);
+}, 800);
+
+/* STORY */
+let index = 0;
+let typing = false;
+
+const story = [
+{img:"img1.jpg", text:"HELLO..."}, // keep your full text here
+{img:"img2.jpg", text:"..."},
+{img:"img3.jpg", text:"..."},
+{img:"img4.jpg", text:"..."},
+{img:"img5.jpg", text:"..."},
+{img:"img6.jpg", text:"..."},
+{img:"img7.jpg", text:"..."},
+{img:"img8.jpg", text:"..."}
+];
+
+function startStory() {
+    document.getElementById("music").volume = 0.4;
+    document.getElementById("music").play();
+    index = 0;
+    show();
+}
+
+function show() {
+    document.getElementById("modal").classList.add("active");
+    document.getElementById("modalImg").src = story[index].img;
+
+    const textEl = document.getElementById("modalText");
+    const fullText = story[index].text;
+
+    textEl.innerText = "";
+    let i = 0;
+    typing = true;
+
+    function type() {
+        if (i < fullText.length) {
+            textEl.innerText += fullText.charAt(i);
+            i++;
+            setTimeout(type, 30);
+        } else {
+            typing = false;
+        }
+    }
+
+    type();
+}
+
+function next() {
+    if (typing) return;
+    index++;
+    if(index < story.length) show();
+    else document.getElementById("modal").classList.remove("active");
+}
+
+function closeModal() {
+    document.getElementById("modal").classList.remove("active");
+}
+
+</script>
+
+</body>
+</html>
